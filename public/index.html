@@ -357,7 +357,7 @@
             const aiResponseDiv = document.getElementById('aiResponse');
 
             sectionAI.classList.remove('hidden');
-            aiResponseDiv.innerHTML = "<span class='animate-pulse italic text-gray-500'>AI sedang merangkum saran... Mohon tunggu...</span>";
+            aiResponseDiv.innerHTML = "<span class='animate-pulse italic text-gray-500'>AI sedang berpikir... Mohon tunggu...</span>";
 
             try {
                 const response = await fetch('/api/analisis-protein', {
