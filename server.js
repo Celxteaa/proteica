@@ -51,6 +51,7 @@ app.post('/api/analisis-protein', async (req, res) => {
     * **Makan Siang:** [Nama makanan & porsi jelas] ([Y] gram protein)
     * **Makan Malam:** [Nama makanan & porsi jelas] ([Z] gram protein)
     **Total Akumulasi Protein:** [Hasil X + Y + Z] gram.
+    Dilarang keras membuat menu yang melebihi target lalu menyuruh pengguna menyesuaikannya sendiri!
 
     Aturan Mutlak:
     - Posisikan diri HANYA sebagai teman belajar/asisten digital, BUKAN dokter atau ahli gizi resmi.
