@@ -51,6 +51,7 @@ app.post('/api/analisis-protein', async (req, res) => {
     * **Makan Siang:** [Nama makanan & porsi jelas] ([Y] gram protein) 
     * **Makan Malam:** [Nama makanan & porsi jelas] ([Z] gram protein) 
     **Total Protein:** [Hasil X + Y + Z] gram. (WAJIB mendekati target ${targetProtein} gram)*
+    *jika kurang atau lebih dari target, beri catatan tambahan di akhir menu: "Total protein dari menu ini [lebih/kekurangan] [jumlah gram] dari target harian Anda."*
 
     Aturan Mutlak:
     - Posisikan diri HANYA sebagai teman belajar/asisten digital, BUKAN dokter atau ahli gizi resmi.
