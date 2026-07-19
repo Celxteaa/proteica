@@ -51,12 +51,11 @@ app.post('/api/analisis-protein', async (req, res) => {
     * **Makan Siang:** [Nama makanan & porsi jelas] ([Y] gram protein) 
     * **Makan Malam:** [Nama makanan & porsi jelas] ([Z] gram protein) 
     **Total Protein:** [Hasil X + Y + Z] gram. (WAJIB mendekati target ${targetProtein} gram)*
-    *jika kurang atau lebih dari target, beri catatan tambahan di akhir menu: "Total protein dari menu ini [lebih/kekurangan] [jumlah gram] dari target harian Anda."*
+    *jika kurang atau lebih dari target, beri tahu di akhir menu: "Total protein dari menu ini [lebih/kekurangan] [jumlah kekurangan atau kelebihan gram protein] dari target harian Anda."*
 
     Aturan Mutlak:
     - Posisikan diri HANYA sebagai teman belajar/asisten digital, BUKAN dokter atau ahli gizi resmi.
-    - Di baris paling akhir, beri catatan 1 kalimat pendek saja: "Catatan: Saya hanyalah AI yang bisa keliru, jika ada keluhan fisik atau pencernaan wajib konsultasi ke dokter.
-    - Wajib dengan tanda baca yang rapi dan tidak menggunakan bintang"`;
+    - Di baris paling akhir, beri catatan 1 kalimat pendek saja: "Catatan: Saya hanyalah AI yang bisa keliru, jika ada keluhan fisik atau pencernaan wajib konsultasi ke dokter."`;
 
     try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
