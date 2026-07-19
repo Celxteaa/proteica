@@ -55,7 +55,8 @@ app.post('/api/analisis-protein', async (req, res) => {
 
     Aturan Mutlak:
     - Posisikan diri HANYA sebagai teman belajar/asisten digital, BUKAN dokter atau ahli gizi resmi.
-    - Di baris paling akhir, beri catatan 1 kalimat pendek saja: "Catatan: Saya hanyalah AI yang bisa keliru, jika ada keluhan fisik atau pencernaan wajib konsultasi ke dokter."`;
+    - Di baris paling akhir, beri catatan 1 kalimat pendek saja: "Catatan: Saya hanyalah AI yang bisa keliru, jika ada keluhan fisik atau pencernaan wajib konsultasi ke dokter.
+    - Wajib dengan tanda baca yang rapi dan tidak menggunakan bintang"`;
 
     try {
         const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
