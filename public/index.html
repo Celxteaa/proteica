@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proteica - Pantau Protein Harian</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f5f2eb; /* Tekstur warna kertas broken white */
+            background-image: radial-gradient(rgba(45, 42, 38, 0.05) 1.5px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .paper-sheet {
+            background-color: #faf9f5;
+            border: 2px solid #2d2a26;
+            box-shadow: 5px 5px 0px 0px #2d2a26;
+        }
+        .paper-input {
+            background-color: #fcfbfa;
+            border: 2px solid #2d2a26;
+            border-radius: 0px;
+            transition: all 0.2s ease;
+        }
+        .paper-input:focus {
+            outline: none;
+            background-color: #ffffff;
+            box-shadow: 2px 2px 0px 0px #2d2a26;
+        }
+        .font-paper-print {
+            font-family: 'Courier Prime', monospace;
+        }
+
+        /* ===== Style tambahan Landing Page — mengikuti sistem visual aplikasi (paper-sheet, warna, tombol) ===== */
+        .page-section { display: none; }
+        .page-section.is-active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .paper-btn-primary {
+            background-color: #2d2a26;
+            color: #faf9f5;
+            border: 2px solid #2d2a26;
+        }
+        .paper-btn-primary:hover { background-color: #4a453e; }
+        .paper-btn-primary:active { transform: translate(2px, 2px); }
+
+        .paper-btn-outline {
+            background-color: #faf9f5;
+            color: #2d2a26;
+            border: 2px solid #2d2a26;
+        }
+        .paper-btn-outline:hover { background-color: #2d2a26; color: #faf9f5; }
+        .paper-btn-outline:active { transform: translate(2px, 2px); }
+
+        .paper-card-flat {
+            background-color: #faf9f5;
+            border: 2px solid #2d2a26;
+        }
+
+        .step-badge {
+            background-color: #2d2a26;
+            color: #faf9f5;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .page-section.is-active { animation: none; }
+        }
+    </style>
+</head>
+<body class="p-4 md:p-10 text-[#2d2a26]">
+
+    <!-- =========================================================
+         HALAMAN 1: LANDING PAGE
+         (mengikuti sistem visual yang sama dengan aplikasi utama:
+          paper-sheet, warna #2d2a26/#faf9f5/#f5f2eb, tombol persegi)
+         ========================================================= -->
+    <section id="page-landing" class="page-section is-active">
+        <div class="max-w-4xl mx-auto">
+
+            <!-- Navigasi Atas -->
+            <nav class="flex items-center justify-between mb-10">
+                <div class="flex items-center gap-3">
+                    <span class="w-9 h-9 step-badge flex items-center justify-center font-bold text-sm border-2 border-[#2d2a26]">P</span>
+                    <span class="font-bold tracking-tight uppercase text-sm md:text-base">Proteica</span>
+                </div>
+                <button onclick="bukaAplikasi()" class="hidden sm:inline-flex paper-btn-primary font-bold px-5 py-2.5 uppercase tracking-widest text-xs transition-all">
+                    Buka Kalkulator
+                </button>
+            </nav>
+
+            <!-- Hero -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8 items-stretch">
+
+                <!-- Kiri: Penjelasan singkat aplikasi (Bobot 2/5, selaras dengan kolom 01. di aplikasi) -->
+                <div class="md:col-span-2 paper-sheet p-6 flex flex-col justify-between">
+                    <div>
+                        <h2 class="text-lg font-bold border-b-2 border-[#2d2a26] pb-2 mb-4 uppercase tracking-wider">Tentang</h2>
+                        <p class="text-sm leading-relaxed text-gray-700 mb-4">
+                            Kalkulator kebutuhan protein harian yang menghitung target gram protein Anda memakai rumus RDA &amp; Lorentz/Broca, lalu hasilnya dijelaskan oleh AI.
+                        </p>
+                        <ul class="text-xs font-paper-print space-y-2 text-gray-600">
+                            <li>&gt; Input: gender, berat, tinggi, aktivitas</li>
+                            <li>&gt; Proses: rumus RDA + Broca</li>
+                            <li>&gt; Output: target gram/hari + interpretasi AI</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 mt-6">
+                        <button onclick="bukaAplikasi()" class="paper-btn-primary font-bold px-5 py-3 uppercase tracking-widest text-xs transition-all text-center">
+                            Mulai Hitung
+                        </button>
+                        <a href="#cara-kerja" class="paper-btn-outline font-bold px-5 py-3 uppercase tracking-widest text-xs transition-all text-center">
+                            Cara Kerja
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Kanan: Contoh hasil -->
+                <div class="md:col-span-3 paper-sheet p-6 bg-[#fcfbfa]">
+                    <h2 class="text-lg font-bold border-b-2 border-[#2d2a26] pb-2 mb-4 uppercase tracking-wider flex items-center justify-between">
+                        <span>Contoh Hasil Kalkulasi</span>
+                        <span class="text-[10px] font-paper-print bg-gray-200 px-2 py-0.5 border border-black">pratinjau</span>
+                    </h2>
+
+                    <div class="text-xs text-gray-500 italic mb-3">Contoh untuk 68 kg, 172 cm, aktif ringan:</div>
+
+                    <div class="bg-[#2d2a26] text-[#faf9f5] text-center p-3 font-bold text-xl uppercase tracking-widest mb-4">
+                        Target: 82 Gram / Hari
+                    </div>
+                    <div class="space-y-3 text-sm not-italic text-[#2d2a26] leading-relaxed">
+                        <p>• <strong>Metode Rasio Kebutuhan:</strong> Berdasarkan berat aktual tubuh Anda (68 kg) dikalikan dengan koefisien aktivitas fisiknya yaitu <strong>1.2g</strong> per kilogram berat badan per hari.</p>
+                        <p>• <strong>Analisis Tinggi Badan:</strong> Menggunakan rumus kalkulasi Lorentz/Broca gender pria, tinggi badan 172 cm memproyeksikan estimasi berat badan ideal Anda di kisaran rata-rata <strong>±65 kg</strong>.</p>
+                        <p class="text-xs text-gray-600 bg-amber-50 p-2 border border-amber-300 italic">Rumus Lorentz/Broca didesain hanya untuk orang dewasa dengan tinggi badan di atas 150 cm.</p>
+                    </div>
+                    <p class="text-[10px] text-gray-400 mt-3 font-paper-print">* Fakta: Konsumsi 5 butir putih telur atau lebih per hari jauh lebih efektif mempercepat penyembuhan luka pasca-operasi dibanding kuning telurnya, karena putih telur menyediakan sekitar 16 hingga 20 gram protein albumin untuk regenerasi jaringan tanpa membawa lemak jenuh dan kolesterol</p>
+                </div>
+            </div>
+
+            <!-- Cara Kerja -->
+            <div id="cara-kerja" class="paper-sheet p-6 mb-8 scroll-mt-10">
+                <h2 class="text-lg font-bold border-b-2 border-[#2d2a26] pb-2 mb-4 uppercase tracking-wider">Cara Kerja</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    <div class="paper-card-flat p-5">
+                        <span class="step-badge w-7 h-7 flex items-center justify-center text-xs font-bold mb-3">1</span>
+                        <h3 class="font-bold text-sm mb-2 uppercase tracking-wide">Isi Data Fisik</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed">Masukkan gender, berat badan, tinggi badan, dan tingkat aktivitas harian Anda.</p>
+                    </div>
+                    <div class="paper-card-flat p-5">
+                        <span class="step-badge w-7 h-7 flex items-center justify-center text-xs font-bold mb-3">2</span>
+                        <h3 class="font-bold text-sm mb-2 uppercase tracking-wide">Sistem Menghitung</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed">Target protein &amp; estimasi berat ideal dihitung otomatis dengan rumus RDA &amp; Lorentz/Broca.</p>
+                    </div>
+                    <div class="paper-card-flat p-5">
+                        <span class="step-badge w-7 h-7 flex items-center justify-center text-xs font-bold mb-3">3</span>
+                        <h3 class="font-bold text-sm mb-2 uppercase tracking-wide">AI Menjelaskan</h3>
+                        <p class="text-xs text-gray-600 leading-relaxed">AI Groq Cloud merangkum hasil hitungan menjadi penjelasan yang mudah dipahami.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <footer class="border-t-2 border-dashed border-[#2d2a26] pt-6 mb-6 text-xs text-gray-600 space-y-3 text-justify">
+                <p class="leading-relaxed"><strong>Catatan Batasan Teknologi:</strong> Web ini memproses hitungan matematis kasar menggunakan standar riset Recommended Dietary Allowance (RDA), rumus Lorentz/Broca dan Body Mass Index (BMI). Interpretasi diproduksi secara otomatis oleh Kecerdasan Buatan (AI) berbasis Groq Cloud.</p>
+                <p class="leading-relaxed">Asisten kecerdasan buatan ini <strong>BUKAN seorang dokter, ahli gizi, maupun praktisi kesehatan bersertifikat</strong>. Respons yang diberikan murni bersifat edukasi interaktif. AI bisa saja keliru atau tidak akurat dalam membaca kondisi metabolik spesifik individu.</p>
+            </footer>
+
+            <!-- CTA Penutup -->
+            <div class="text-center mb-8">
+                <button onclick="bukaAplikasi()" class="paper-btn-primary font-bold px-8 py-4 uppercase tracking-widest text-sm transition-all">
+                    Buka Kalkulator &amp; Tanya AI
+                </button>
+            </div>
+
+            <!-- Footer Hak Cipta -->
+            <footer class="pt-4 border-t-4 border-double border-[#2d2a26] text-center text-xs tracking-wider uppercase font-semibold text-gray-700">
+                <p>© 2026 – Developed by CelxTea</p>
+            </footer>
+        </div>
+    </section>
+
+    <!-- =========================================================
+         HALAMAN 2: APLIKASI UTAMA
+         ========================================================= -->
+    <section id="page-app" class="page-section">
+        <div class="max-w-4xl mx-auto">
+
+            <!-- Navigasi kembali ke landing page -->
+            <div class="mb-6">
+                <button onclick="bukaBeranda()" class="font-paper-print text-xs uppercase tracking-widest border-2 border-[#2d2a26] px-4 py-2 bg-[#faf9f5] hover:bg-[#2d2a26] hover:text-[#faf9f5] transition-all">
+                    ← Kembali ke Beranda
+                </button>
+            </div>
+
+            <!-- Header Utama -->
+            <header class="text-center mb-10 border-b-4 border-double border-[#2d2a26] pb-6">
+                <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight uppercase">Proteica</h1>
+                <p class="text-xs md:text-sm italic text-gray-600 mt-2 tracking-wide">Kalkulator Berdasarkan standar riset Recommended Dietary Allowance (RDA), rumus Lorentz/Broca dan Body Mass Index (BMI)</p>
+            </header>
+
+            <!-- Kisi Utama (Grid) -->
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+
+                <!-- Kolom Kiri: Input Data Fisik (Bobot 2/5) -->
+                <div class="md:col-span-2 paper-sheet p-6">
+                    <h2 class="text-lg font-bold border-b-2 border-[#2d2a26] pb-2 mb-4 uppercase tracking-wider">01. Identifikasi Fisik</h2>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase mb-1 tracking-wider">Jenis Kelamin</label>
+                            <select id="gender" class="w-full paper-input p-3 text-sm bg-white">
+                                <option value="pria">Pria</option>
+                                <option value="wanita">Wanita</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase mb-1 tracking-wider">Berat Badan (KG)</label>
+                            <input type="number" id="weight" placeholder="Contoh: 68" class="w-full paper-input p-3 text-lg">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase mb-1 tracking-wider">Tinggi Badan (CM)</label>
+                            <input type="number" id="height" placeholder="Contoh: 172" class="w-full paper-input p-3 text-lg">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase mb-1 tracking-wider">Intensitas Aktivitas</label>
+                            <select id="activity" class="w-full paper-input p-3 text-sm bg-white">
+                                <option value="sedentary">Santai / Duduk Seharian (0.8g/kg)</option>
+                                <option value="moderate">Aktif Ringan / Olahraga 1-3x Seminggu (1.2g/kg)</option>
+                                <option value="active">Sangat Aktif / Angkat Beban Berat (1.5g/kg)</option>
+                            </select>
+                        </div>
+
+                        <button onclick="prosesData()" id="btnSubmit" class="w-full bg-[#2d2a26] text-[#faf9f5] font-bold p-4 uppercase tracking-widest text-sm hover:bg-opacity-90 active:translate-x-1 active:translate-y-1 transition-all border-2 border-[#2d2a26] box-shadow">
+                            Hitung & Tanya AI
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kolom Kanan: Perhitungan Riset Klinis Terbuka (Bobot 3/5) -->
+                <div class="md:col-span-3 paper-sheet p-6 bg-[#fcfbfa]">
+                    <h2 class="text-lg font-bold border-b-2 border-[#2d2a26] pb-2 mb-4 uppercase tracking-wider">02. Kalkulasi</h2>
+
+                    <div id="rekomendasiAwal" class="h-full flex flex-col justify-between text-gray-500 italic pb-6">
+                        <p class="text-sm">Silakan masukkan data berat dan tinggi badan Anda untuk memunculkan kebutuhan protein berdasarkan Recommended Dietary Allowance (RDA) dan rumus Lorentz/Broca</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bagian Hasil Analisis AI Groq -->
+            <div id="sectionAI" class="paper-sheet p-6 mb-8 hidden">
+                <h2 class="text-lg font-bold border-b-2 border-[#2d2a26] pb-2 mb-4 uppercase flex items-center justify-between tracking-wider">
+                    <span>03. Interpretasi AI</span>
+                    <span class="text-xs bg-gray-200 font-mono px-2 py-0.5 rounded-none border border-black">groq-llama3</span>
+                </h2>
+                <div id="aiResponse" class="text-sm md:text-base leading-relaxed space-y-4 font-paper-print whitespace-pre-line text-justify">
+                    <!-- Respons dari backend Express dimasukkan ke sini -->
+                </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <footer class="border-t-2 border-dashed border-[#2d2a26] pt-6 text-xs text-gray-600 space-y-3 text-justify">
+                <p class="leading-relaxed"><strong>Catatan Batasan Teknologi:</strong> Web ini memproses hitungan matematis kasar menggunakan standar riset Recommended Dietary Allowance (RDA), rumus Lorentz/Broca dan Body Mass Index (BMI). Interpretasi diproduksi secara otomatis oleh Kecerdasan Buatan (AI) berbasis Groq Cloud.</p>
+                <p class="leading-relaxed">Asisten kecerdasan buatan ini <strong>BUKAN seorang dokter, ahli gizi, maupun praktisi kesehatan bersertifikat</strong>. Respons yang diberikan murni bersifat edukasi interaktif. AI bisa saja keliru atau tidak akurat dalam membaca kondisi metabolik spesifik individu.</p>
+            </footer>
+
+            <!-- Footer Hak Cipta & Developer -->
+            <footer class="mt-8 pt-4 border-t-4 border-double border-[#2d2a26] text-center text-xs tracking-wider uppercase font-semibold text-gray-700">
+                <p>© 2026 – Developed by CelxTea</p>
+            </footer>
+        </div>
+    </section>
+
+    <script>
+        // ================== Navigasi Multipage (Single File) ==================
+        function tampilkanHalaman(id) {
+            document.querySelectorAll('.page-section').forEach(function (sec) {
+                sec.classList.remove('is-active');
+            });
+            document.getElementById(id).classList.add('is-active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function bukaAplikasi() {
+            history.pushState({ page: 'app' }, '', '#aplikasi');
+            tampilkanHalaman('page-app');
+        }
+
+        function bukaBeranda() {
+            history.pushState({ page: 'landing' }, '', '#beranda');
+            tampilkanHalaman('page-landing');
+        }
+
+        window.addEventListener('popstate', function () {
+            if (window.location.hash === '#aplikasi') {
+                tampilkanHalaman('page-app');
+            } else {
+                tampilkanHalaman('page-landing');
+            }
+        });
+
+        // Buka langsung ke halaman aplikasi jika diakses via #aplikasi
+        if (window.location.hash === '#aplikasi') {
+            tampilkanHalaman('page-app');
+        }
+
+        // ================== Logika Kalkulator ==================
+        async function prosesData() {
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const activity = document.getElementById('activity').value;
+            const gender = document.getElementById('gender').value;
+            const btnSubmit = document.getElementById('btnSubmit');
+
+            if (!weight || !height || weight <= 0 || height <= 0) {
+                alert('Mohon masukkan angka berat dan tinggi badan yang valid.');
+                return;
+            }
+
+            // 1. Rumus Matematika Riset Nyata (RDA)
+            let multiplier = 0.8;
+            if (activity === 'moderate') multiplier = 1.2;
+            if (activity === 'active') multiplier = 1.5;
+
+            const targetProtein = Math.round(weight * multiplier);
+            
+            // 2. Rumus Broca Medis Baku Akurat Berdasarkan Gender & Batas Tinggi
+            let beratIdealBroca = 0;
+            if (height > 100) {
+                let faktorPotongan = (gender === 'wanita') ? 0.15 : 0.10;
+                beratIdealBroca = Math.round((height - 100) - ((height - 100) * faktorPotongan));
+                if (beratIdealBroca < 0) beratIdealBroca = 0;
+            }
+
+            // Perbarui Kotak Informasi Riset Medis secara instan
+            document.getElementById('rekomendasiAwal').innerHTML = `
+                <div class="bg-[#2d2a26] text-[#faf9f5] text-center p-3 font-bold text-xl uppercase tracking-widest mb-4">
+                    Target: ${targetProtein} Gram / Hari
+                </div>
+                <div class="space-y-3 text-sm not-italic text-[#2d2a26] leading-relaxed">
+                    <p>• <strong>Metode Rasio Kebutuhan:</strong> Berdasarkan berat aktual tubuh Anda (${weight} kg) dikalikan dengan koefisien aktivitas fisiknya yaitu <strong>${multiplier}g</strong> per kilogram berat badan per hari.</p>
+                    <p>• <strong>Analisis Tinggi Badan (${gender === 'pria' ? 'Pria' : 'Wanita'}):</strong> Menggunakan rumus kalkulasi Lorentz/Broca gender ${gender}, tinggi badan ${height} cm memproyeksikan estimasi berat badan ideal Anda di kisaran rata-rata <strong>±${beratIdealBroca} kg</strong>.</p>
+                    <p class="text-xs text-gray-600 bg-amber-50 p-2 border border-amber-300 italic">Rumus Lorentz/Broca didesain hanya untuk orang dewasa dengan tinggi badan di atas 150 cm.</p>
+                    <p class="text-[10px] text-gray-400 mt-3 font-paper-print">* Fakta: Konsumsi 5 butir putih telur atau lebih per hari jauh lebih efektif mempercepat penyembuhan luka pasca-operasi dibanding kuning telurnya, karena putih telur menyediakan sekitar 16 hingga 20 gram protein albumin untuk regenerasi jaringan tanpa membawa lemak jenuh dan kolesterol</p>
+                </div>
+            `;
+
+            // 3. Kirim Data Ke Server Backend untuk Meminta Analisis Groq AI
+            btnSubmit.disabled = true;
+            btnSubmit.innerText = "MENULIS CATATAN AI...";
+
+            const sectionAI = document.getElementById('sectionAI');
+            const aiResponseDiv = document.getElementById('aiResponse');
+
+            sectionAI.classList.remove('hidden');
+            aiResponseDiv.innerHTML = "<span class='animate-pulse italic text-gray-500'>AI sedang merangkum saran... Mohon tunggu...</span>";
+
+            try {
+                const response = await fetch('/api/analisis-protein', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ weight, height, activity, gender, targetProtein })
+                });
+
+                const data = await response.json();
+
+                if (data.result) {
+                    aiResponseDiv.textContent = data.result;
+                } else if (data.error) {
+                    aiResponseDiv.innerHTML = `<span class="text-red-700 font-bold">Gagal: ${data.error}</span>`;
+                }
+            } catch (error) {
+                console.error(error);
+                aiResponseDiv.innerHTML = "<span class='text-red-700 font-bold'>Gagal menghubungi server lokal. Pastikan server Node.js Anda sudah berjalan.</span>";
+            } finally {
+                btnSubmit.disabled = false;
+                btnSubmit.innerText = "HITUNG & TANYA AI";
+            }
+        }
+    </script>
+</body>
+</html>
