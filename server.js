@@ -43,7 +43,10 @@ app.post('/api/analisis-protein', async (req, res) => {
 
     Berikan jawaban langsung fokus pada 2 poin ini (singkat, padat, dan to-the-point):
     1. **Status Tubuh & Kenapa target protein ini pas?** Sebutkan hasil kategori tubuhnya secara spesifik (Kurus/Normal/Overweight/Obesitas). Jelaskan dalam 1-2 kalimat pendek hubungan target ${targetProtein} gram dengan berat badan ${weight} kg mereka agar membantu mencapai kondisi tubuh yang lebih sehat dan ideal.
-    2. **Contoh Menu Praktis:** Berikan daftar poin (bullet points) kombinasi makanan lokal sederhana (seperti telur, tahu, tempe, dada ayam) untuk mencapai sekitar ${targetProtein} gram beserta porsi ringkasnya.
+    2. **Contoh Menu Praktis:** Berikan daftar poin (bullet points) kombinasi makanan lokal sederhana (seperti telur, tahu, tempe, dada ayam dll dengan 3 kali makan perhari) untuk mencapai sekitar ${targetProtein} gram beserta porsi ringkasnya.
+    *Peringatan Keras: Pastikan jika total gram protein dari seluruh menu yang Anda sebutkan di bawah ini dijumlahkan, hasilnya HARUS mendekati atau pas dengan target ${targetProtein} gram. Jangan memberikan total menu yang melebihi target tersebut.*
+
+    Gunakan kandungan gizi dari sumber makanan lokal yang umum, dan pastikan porsi realistis.
 
     Aturan Mutlak:
     - Posisikan diri HANYA sebagai teman belajar/asisten digital, BUKAN dokter atau ahli gizi resmi.
