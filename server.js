@@ -47,9 +47,9 @@ app.post('/api/analisis-protein', async (req, res) => {
     *Peringatan Keras: Pastikan jika total gram protein dari seluruh menu yang Anda sebutkan di bawah ini dijumlahkan, hasilnya HARUS mendekati atau pas dengan target ${targetProtein} gram. Jangan memberikan total menu yang melebihi target tersebut dan gunakan kandungan gizi dari sumber makanan lokal yang umum dan sesuai referensi nyata dan fakta, dan pastikan porsi realistis..*
 
     *Wajib gunakan format persis seperti ini:
-    * **Sarapan:** [Nama makanan & porsi jelas] ([X] gram protein)
-    * **Makan Siang:** [Nama makanan & porsi jelas] ([Y] gram protein)
-    * **Makan Malam:** [Nama makanan & porsi jelas] ([Z] gram protein)
+    * **Sarapan:** [Nama makanan & porsi jelas] ([X] gram protein) (tambah atau kurangi jika kurang aau lebih dari target)
+    * **Makan Siang:** [Nama makanan & porsi jelas] ([Y] gram protein) (tambah atau kurangi jika kurang atau lebih dari target)
+    * **Makan Malam:** [Nama makanan & porsi jelas] ([Z] gram protein) (tambah atau kurangi jika kurang atau lebih dari target)
     **Total Protein:** [Hasil X + Y + Z] gram. [WAJIB mendekati target ${targetProtein} gram dan jika kebutuhan protein lebih tinggi, pertimbangkan peningkatan porsi makanan protein yang sehat sampai mendekati target proteinnya]*
 
     Aturan Mutlak:
